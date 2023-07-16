@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
                 != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, 2);
+            requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS},  1);
         }
 
         /*if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS)
@@ -74,6 +74,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void btnManageAccountsClick(View view){
         Intent intent = new Intent(this, ManageAcc.class);
+        startActivity(intent);
+    }
+
+    public void btnBackupExportClick(View view){
+        Intent intent = new Intent(this, BackupExport.class);
         startActivity(intent);
     }
 }

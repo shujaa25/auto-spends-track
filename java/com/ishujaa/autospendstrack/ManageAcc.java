@@ -53,6 +53,8 @@ public class ManageAcc extends AppCompatActivity {
         }
     }
 
+
+
     public void btnAddNewAccClick(View view){
         EditText editTextNewAccName = findViewById(R.id.edit_text_new_acc_name);
         String newAccName = editTextNewAccName.getText().toString();

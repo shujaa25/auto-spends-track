@@ -17,5 +17,10 @@
         android:layout_height="wrap_content"
         android:text="Accounts"
         android:onClick="btnManageAccountsClick"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Backup"
+        android:onClick="btnBackupExportClick"/>
 
 </LinearLayout>

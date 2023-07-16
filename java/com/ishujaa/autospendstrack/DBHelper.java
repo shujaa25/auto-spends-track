@@ -40,13 +40,13 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE table_accounts " +
                 "(_id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "name TEXT NOT NULL);");
+                "name TEXT UNIQUE NOT NULL);");
 
         db.execSQL("CREATE TABLE table_txns " +
                 "(_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "amount TEXT NOT NULL," +
                 "acc_id INTEGER NOT NULL," +
-                "comment TEXT," +
+                "comment TEXT DEFAULT 'none'," +
                 "date DATETIME DEFAULT (datetime('now', 'localtime')) NOT NULL," +
                 "FOREIGN KEY(acc_id) REFERENCES table_accounts(_id));");
 
@@ -78,4 +78,6 @@ public class DBHelper extends SQLiteOpenHelper {
                 new String[]{"name"}, new int[]{android.R.id.text1}, 0);
         return cursorAdapter;
     }
+
+
 }
