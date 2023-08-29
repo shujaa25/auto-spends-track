@@ -5,9 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,7 +14,7 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
-public class ManageAcc extends AppCompatActivity {
+public class ManageAccActivity extends AppCompatActivity {
 
     private DBHelper dbHelper;
     private ListView listViewAccounts;
@@ -37,8 +35,8 @@ public class ManageAcc extends AppCompatActivity {
         listViewAccounts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(view.getContext(), AccountView.class);
-                intent.putExtra(AccountView.ACC_ID_EXTRA, id);
+                Intent intent = new Intent(view.getContext(), AccountViewActivity.class);
+                intent.putExtra(AccountViewActivity.ACC_ID_EXTRA, id);
                 startActivity(intent);
             }
         });

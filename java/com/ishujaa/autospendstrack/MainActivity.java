@@ -9,8 +9,6 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
@@ -36,10 +34,10 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if(id == R.id.action_add_new){
-            startActivity(new Intent(this, AddTxn.class));
+            startActivity(new Intent(this, AddTxnActivity.class));
             return true;
         }else if(id == R.id.action_manage_acc){
-            startActivity(new Intent(this, ManageAcc.class));
+            startActivity(new Intent(this, ManageAccActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -59,8 +57,8 @@ public class MainActivity extends AppCompatActivity {
         listViewTxn.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(view.getContext(), TxnView.class);
-                intent.putExtra(TxnView.TXN_ID_EXTRA, id);
+                Intent intent = new Intent(view.getContext(), TxnViewActivity.class);
+                intent.putExtra(TxnViewActivity.TXN_ID_EXTRA, id);
                 startActivity(intent);
             }
         });

@@ -14,7 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class AddTxn extends AppCompatActivity {
+public class AddTxnActivity extends AppCompatActivity {
 
     static final String MSG_EXTRA = "MSGEXTRA_AST_AddTxn";
     static final String SENDER_EXTRA = "SENDER_EXTRA";

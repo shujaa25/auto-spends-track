@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class AccountView extends AppCompatActivity {
+public class AccountViewActivity extends AppCompatActivity {
 
     static String ACC_ID_EXTRA = "acc_id";
     private DBHelper dbHelper;

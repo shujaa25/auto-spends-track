@@ -20,22 +20,22 @@
         android:theme="@style/Theme.AutoSpendsTrack"
         tools:targetApi="31">
         <activity
-            android:name=".TxnView"
+            android:name=".TxnViewActivity"
             android:label="View Transaction"
             android:exported="false"
             android:parentActivityName=".MainActivity"/>
         <activity
-            android:name=".AccountView"
+            android:name=".AccountViewActivity"
             android:label="View Account"
             android:exported="false"
-            android:parentActivityName=".ManageAcc"/>
+            android:parentActivityName=".ManageAccActivity"/>
         <activity
-            android:name=".ManageAcc"
+            android:name=".ManageAccActivity"
             android:label="Manage Accounts"
             android:exported="false"
             android:parentActivityName=".MainActivity"/>
         <activity
-            android:name=".AddTxn"
+            android:name=".AddTxnActivity"
             android:label="Add Transaction"
             android:exported="false"
             android:parentActivityName=".MainActivity"/>

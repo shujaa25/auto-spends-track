@@ -6,11 +6,10 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class TxnView extends AppCompatActivity {
+public class TxnViewActivity extends AppCompatActivity {
 
     static String TXN_ID_EXTRA = "TXN_ID_EXTRA";
     private DBHelper dbHelper;

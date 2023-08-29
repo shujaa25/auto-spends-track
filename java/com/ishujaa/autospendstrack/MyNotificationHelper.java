@@ -12,12 +12,12 @@ import androidx.core.app.NotificationManagerCompat;
 
 import java.util.Random;
 
-public class MyNotification {
+public class MyNotificationHelper {
     private final String CHANNEL_ID = "com.ishujaa.autospendstrack";
     private final Context context;
     private int notification_id = new Random().nextInt();
 
-    MyNotification(Context context) {
+    MyNotificationHelper(Context context) {
         this.context = context;
         createNotificationChannel();
 
@@ -34,10 +34,10 @@ public class MyNotification {
     }
 
     public void postNotification(String title, String text){
-        Intent txnIntent = new Intent(context, AddTxn.class);
+        Intent txnIntent = new Intent(context, AddTxnActivity.class);
         txnIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        txnIntent.putExtra(AddTxn.SENDER_EXTRA, title);
-        txnIntent.putExtra(AddTxn.MSG_EXTRA, text);
+        txnIntent.putExtra(AddTxnActivity.SENDER_EXTRA, title);
+        txnIntent.putExtra(AddTxnActivity.MSG_EXTRA, text);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, notification_id,
                 txnIntent, PendingIntent.FLAG_IMMUTABLE);
 
