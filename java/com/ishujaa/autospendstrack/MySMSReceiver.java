@@ -31,25 +31,13 @@ public class MySMSReceiver extends BroadcastReceiver {
     private static final String TAG = MySMSReceiver.class.getSimpleName();
     public static final String pdu_type = "pdus";
     private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 1;
-    String CHANNEL_ID = "com.ishujaa.autospendstrack";
 
-    private void createNotificationChannel(Context context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "ast_ishujaacom";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-            NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
-
-    public int notification_id = new Random().nextInt();
     private SQLiteOpenHelper openHelper;
-
+    private MyNotification notification;
     @SuppressLint("UnsafeProtectedBroadcastReceiver")
     @Override
     public void onReceive(Context context, Intent in) {
-        createNotificationChannel(context);
+        notification = new MyNotification(context);
 
         Bundle bundle = in.getExtras();
         SmsMessage[] msgs;
@@ -71,36 +59,8 @@ public class MySMSReceiver extends BroadcastReceiver {
                         !msgs[i].getMessageBody().toLowerCase(Locale.ROOT).contains(" txn "))
                     continue;
 
-                Intent txnIntent = new Intent(context, AddTxn.class);
-                txnIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                txnIntent.putExtra(AddTxn.SENDER_EXTRA, msgs[i].getOriginatingAddress());
-                txnIntent.putExtra(AddTxn.MSG_EXTRA, msgs[i].getMessageBody());
-                PendingIntent pendingIntent = PendingIntent.getActivity(context, notification_id,
-                        txnIntent, PendingIntent.FLAG_IMMUTABLE);
-
-                NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID);
-                builder.setSmallIcon(R.mipmap.ic_launcher);
-                builder.setContentTitle("Transaction detected from " + msgs[i].getOriginatingAddress());
-                builder.setContentText(msgs[i].getMessageBody());
-                builder.addAction(R.drawable.ic_launcher_foreground, "Add", pendingIntent);
-                NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
-                builder.setAutoCancel(false); //reset
-                builder.setContentIntent(pendingIntent);
-
-
-                if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    Toast.makeText(context, "Notification permission needed. - AutoSpendsTracer",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                notificationManager.notify(notification_id++, builder.build());
+                notification.postNotification(msgs[i].getOriginatingAddress(),
+                        msgs[i].getMessageBody());
 
                 String time = "null";
                 LocalDateTime now = null;

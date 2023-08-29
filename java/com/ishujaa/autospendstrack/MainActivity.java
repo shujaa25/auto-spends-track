@@ -1,7 +1,9 @@
 package com.ishujaa.autospendstrack;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
@@ -11,22 +13,45 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.security.Permission;
 
 public class MainActivity extends AppCompatActivity {
 
     private DBHelper dbHelper;
     private ListView listViewTxn;
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.action_add_new){
+            startActivity(new Intent(this, AddTxn.class));
+            return true;
+        }else if(id == R.id.action_manage_acc){
+            startActivity(new Intent(this, ManageAcc.class));
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toolbar toolbar = findViewById(R.id.toolbar_main);
+        setSupportActionBar(toolbar);
 
         dbHelper = new DBHelper(this);
 
@@ -40,11 +65,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         updateListView();
-
-        Intent intent = new Intent(this, AddTxn.class);
-        intent.putExtra(AddTxn.SENDER_EXTRA, "SENDERTEST");
-        intent.putExtra(AddTxn.MSG_EXTRA, "Rs. 1212.10 debited from HDFC Bank");
-        startActivity(intent);
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -70,15 +90,5 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         updateListView();
-    }
-
-    public void btnManageAccountsClick(View view){
-        Intent intent = new Intent(this, ManageAcc.class);
-        startActivity(intent);
-    }
-
-    public void btnBackupExportClick(View view){
-        Intent intent = new Intent(this, BackupExport.class);
-        startActivity(intent);
     }
 }

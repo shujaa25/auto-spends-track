@@ -20,20 +20,25 @@
         android:theme="@style/Theme.AutoSpendsTrack"
         tools:targetApi="31">
         <activity
-            android:name=".BackupExport"
-            android:exported="false" />
-        <activity
             android:name=".TxnView"
-            android:exported="false" />
+            android:label="View Transaction"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".AccountView"
-            android:exported="false" />
+            android:label="View Account"
+            android:exported="false"
+            android:parentActivityName=".ManageAcc"/>
         <activity
             android:name=".ManageAcc"
-            android:exported="false" />
+            android:label="Manage Accounts"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".AddTxn"
-            android:exported="false" />
+            android:label="Add Transaction"
+            android:exported="false"
+            android:parentActivityName=".MainActivity"/>
 
         <receiver
             android:name=".MySMSReceiver"
@@ -46,7 +51,8 @@
 
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:label="Auto Spends Tracker">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
