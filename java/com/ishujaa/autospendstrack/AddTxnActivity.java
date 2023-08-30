@@ -4,10 +4,13 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
@@ -18,9 +21,10 @@ public class AddTxnActivity extends AppCompatActivity {
 
     static final String MSG_EXTRA = "MSGEXTRA_AST_AddTxn";
     static final String SENDER_EXTRA = "SENDER_EXTRA";
+    static final String EXPLICIT_EXTRA = "EXPLICIT_EXTRA";
 
-    private EditText editTextAmount;
-    private DBHelper dbHelper;
+    private EditText editTextAmount, editTextNote;
+    private DBAccess dbAccess;
     private Spinner spinner;
 
     @Override
@@ -36,20 +40,27 @@ public class AddTxnActivity extends AppCompatActivity {
         editTextAmount = findViewById(R.id.edit_text_amount_input);
 
         Intent intent = getIntent();
-        String msg = intent.getStringExtra(MSG_EXTRA);
-        String sender = intent.getStringExtra(SENDER_EXTRA);
-        TextView textViewSender = findViewById(R.id.text_view_sender);
-        textViewSender.setText("Sender: "+sender);
-        TextView textViewMsg = findViewById(R.id.text_view_msg);
-        textViewMsg.setText("Message: "+msg);
+        boolean isExplicit = intent.getBooleanExtra(EXPLICIT_EXTRA, false);
+        if(!isExplicit){
+            String msg = intent.getStringExtra(MSG_EXTRA);
+            String sender = intent.getStringExtra(SENDER_EXTRA);
+            TextView textViewSender = findViewById(R.id.text_view_sender);
+            textViewSender.setVisibility(View.VISIBLE);
+            textViewSender.setText("Sender: "+sender);
+            TextView textViewMsg = findViewById(R.id.text_view_msg);
+            textViewMsg.setVisibility(View.VISIBLE);
+            textViewMsg.setText("Message: "+msg);
+            processMsg(msg);
+        }
 
-        dbHelper = new DBHelper(this);
+        dbAccess = new DBAccess(this);
         spinner = findViewById(R.id.spinner_acc_view);
-        SimpleCursorAdapter cursorAdapter = dbHelper.getAccountsAdapter();
+        SimpleCursorAdapter cursorAdapter = dbAccess.getAccountsAdapter();
         spinner.setAdapter(cursorAdapter);
 
-        processMsg(msg);
-
+        editTextNote = findViewById(R.id.edit_text_note_input);
+        editTextNote.requestFocus();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
     }
 
     private void processMsg(String msg){
@@ -72,12 +83,10 @@ public class AddTxnActivity extends AppCompatActivity {
     }
 
     public void btnInsertTxnClick(View view){
-        EditText editTextComment = findViewById(R.id.edit_text_comment_input);
         long accId = spinner.getSelectedItemId();
         try{
-            SQLiteDatabase database = dbHelper.getWritableDatabase();
-            dbHelper.insertTxn(database, editTextAmount.getText().toString(),
-                    accId, editTextComment.getText().toString());
+            dbAccess.insertNewTxn(Double.parseDouble(editTextAmount.getText().toString()),
+                    (int)accId, editTextNote.getText().toString());
             Toast.makeText(this, "Inserted.", Toast.LENGTH_SHORT).show();
             finish();
         }catch (Exception e){

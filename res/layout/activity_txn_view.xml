@@ -16,29 +16,50 @@
         android:orientation="vertical"
         android:padding="16dp">
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Account"/>
+        <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/text_view_sender_val"/>
+            android:id="@+id/spinner_acc_name_view" />
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Amount"/>
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/text_view_msg_val"/>
+            android:id="@+id/edit_text_amt_val"/>
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Note"/>
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/text_view_acc_name_val"/>
+            android:maxLength="30"
+            android:id="@+id/edit_text_note_val"/>
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Date/Time"/>
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/text_view_amt_val"/>
-        <TextView
+            android:id="@+id/edit_text_datetime_val"
+            android:enabled="false"/>
+        <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/text_view_cmt_val"/>
-        <TextView
+            android:layout_marginTop="10dp"
+            android:text="Update"
+            android:onClick="btnUpdateTxnClick"/>
+        <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/text_view_datetime_val"/>
+            android:text="Delete"
+            android:onClick="btnDeleteTxnClick"/>
     </LinearLayout>
 
 </LinearLayout>

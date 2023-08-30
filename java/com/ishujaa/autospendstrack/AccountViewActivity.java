@@ -1,6 +1,7 @@
 package com.ishujaa.autospendstrack;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -16,8 +17,8 @@ import android.widget.Toast;
 public class AccountViewActivity extends AppCompatActivity {
 
     static String ACC_ID_EXTRA = "acc_id";
-    private DBHelper dbHelper;
-    private long accId;
+    private DBAccess dbAccess;
+    private int accId;
 
     private EditText editTextAccName;
 
@@ -32,21 +33,14 @@ public class AccountViewActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
-        accId = intent.getLongExtra(ACC_ID_EXTRA, -1);
+        accId = intent.getIntExtra(ACC_ID_EXTRA, -1);
 
-        dbHelper = new DBHelper(this);
+        dbAccess = new DBAccess(this);
         editTextAccName = findViewById(R.id.edit_text_view_acc_name);
 
         if(accId != -1){
             try{
-                SQLiteDatabase database = dbHelper.getReadableDatabase();
-                Cursor cursor = database.query(DBHelper.TABLE_ACCOUNTS, new String[]{"name"},
-                        "_id=?", new String[]{String.valueOf(accId)},
-                        null, null, null);
-                cursor.moveToFirst();
-                editTextAccName.setText(cursor.getString(0));
-                cursor.close();
-                database.close();
+                editTextAccName.setText(dbAccess.getAccountName(accId));
             }catch (Exception e){
                 Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
             }
@@ -56,16 +50,26 @@ public class AccountViewActivity extends AppCompatActivity {
     }
 
     public void btnDeleteClick(View view){
-
-        //show confirmation dialog
-
         try{
-            SQLiteDatabase database = dbHelper.getWritableDatabase();
-            database.delete(DBHelper.TABLE_ACCOUNTS, "_id=?",
-                    new String[]{String.valueOf(accId)});
-            database.close();
-            Toast.makeText(this, "Deleted.", Toast.LENGTH_SHORT).show();
-            finish();
+            if(accId != -1){
+                if(accId != 1){
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+                    builder1.setMessage("Do you really want to delete?");
+                    builder1.setCancelable(true);
+                    builder1.setPositiveButton("Yes",(dialog, id) -> {
+                        dbAccess.deleteAccount(accId);
+                        Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show();
+                        finish();
+                    });
+                    builder1.setNegativeButton("No", (dialog, id) -> dialog.cancel());
+
+                    AlertDialog alert11 = builder1.create();
+                    alert11.show();
+                }
+                else
+                    Toast.makeText(this, "Error: Cannot delete Default account.",
+                            Toast.LENGTH_LONG).show();
+            }
         }catch (Exception e){
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
@@ -73,13 +77,13 @@ public class AccountViewActivity extends AppCompatActivity {
 
     public void btnUpdateNameClick(View view){
         try{
-            SQLiteDatabase database = dbHelper.getWritableDatabase();
-            ContentValues contentValues = new ContentValues();
-            contentValues.put("name", editTextAccName.getText().toString());
-            database.update(DBHelper.TABLE_ACCOUNTS, contentValues,"_id=?",
-                    new String[]{String.valueOf(accId)});
-            database.close();
-            Toast.makeText(this, "Updated.", Toast.LENGTH_SHORT).show();
+            if(accId != -1){
+                dbAccess.updateAccount(accId, editTextAccName.getText().toString());
+                Toast.makeText(this, "Updated", Toast.LENGTH_SHORT).show();
+            }
+            else
+                Toast.makeText(this, "Error: Not possible.", Toast.LENGTH_LONG).show();
+            finish();
         }catch (Exception e){
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
         }

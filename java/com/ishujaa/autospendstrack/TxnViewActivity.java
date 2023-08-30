@@ -1,22 +1,33 @@
 package com.ishujaa.autospendstrack;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.SimpleCursorAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
+
+import java.util.HashMap;
 
 public class TxnViewActivity extends AppCompatActivity {
 
     static String TXN_ID_EXTRA = "TXN_ID_EXTRA";
-    private DBHelper dbHelper;
-    private TextView textViewSender, textViewMsg, textViewAmt, textViewAccName, textViewCmt,
-    textViewDateTime;
+    private DBAccess dbAccess;
+    private EditText editTextAmt,editTextNote, editTextDateTime;
+    private Spinner spinner;
+    private int txnId;
+    private long accId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,48 +39,77 @@ public class TxnViewActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
-        long id = intent.getLongExtra(TXN_ID_EXTRA, -1);
+        txnId = intent.getIntExtra(TXN_ID_EXTRA, -1);
 
-        textViewSender = findViewById(R.id.text_view_sender_val);
-        textViewMsg = findViewById(R.id.text_view_msg_val);
-        textViewAccName = findViewById(R.id.text_view_acc_name_val);
-        textViewAmt = findViewById(R.id.text_view_amt_val);
-        textViewCmt = findViewById(R.id.text_view_cmt_val);
-        textViewDateTime = findViewById(R.id.text_view_datetime_val);
+        editTextAmt = findViewById(R.id.edit_text_amt_val);
+        editTextNote= findViewById(R.id.edit_text_note_val);
+        editTextDateTime = findViewById(R.id.edit_text_datetime_val);
 
-        dbHelper = new DBHelper(this);
+        dbAccess = new DBAccess(this);
 
-        if(id != -1){
+        if(txnId != -1){
+
+            spinner = findViewById(R.id.spinner_acc_name_view);
+            SimpleCursorAdapter cursorAdapter = dbAccess.getAccountsAdapter();
+
+            spinner.setAdapter(cursorAdapter);
+
             try{
-                SQLiteDatabase database = dbHelper.getReadableDatabase();
-                Cursor cursor = database.query(DBHelper.TABLE_TXNS, new String[]{"amount, acc_id," +
-                                "comment, date"},
-                        "_id=?", new String[]{String.valueOf(id)},
-                        null, null, null);
-                cursor.moveToFirst();
 
-                textViewAmt.setText("Amount: "+cursor.getString(0));
-                long accId = Long.parseLong(cursor.getString(1));
-                textViewCmt.setText("Comment: "+cursor.getString(2));
-                textViewDateTime.setText("Date Time: "+cursor.getString(3));
+                Transaction transaction = dbAccess.getTransaction(txnId);
 
-                textViewSender.setText("Sender: "); textViewMsg.setText("Message: ");
+                editTextAmt.setText(String.valueOf(transaction.getAmount()));
+                accId = transaction.getAccountId();
+                editTextNote.setText(transaction.getNote());
+                editTextDateTime.setText(transaction.getDate());
 
-                cursor.close();
+                for(int i=0;i<cursorAdapter.getCount();i++) {
+                    if(accId == cursorAdapter.getItemId(i)){
+                        spinner.setSelection(i);
+                        break;
+                    }
+                }
 
-                cursor = database.query(DBHelper.TABLE_ACCOUNTS, new String[]{"name"},
-                        "_id=?", new String[]{String.valueOf(accId)},
-                        null, null, null);
-                cursor.moveToFirst();
-
-                textViewAccName.setText("Account: "+cursor.getString(0));
-                cursor.close();
-                database.close();
             }catch (Exception e){
                 Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
             }
         }else {
-            Toast.makeText(this, "Invalid ID supplied.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Error: Invalid ID supplied.", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void btnUpdateTxnClick(View view) {
+        try{
+            if(txnId != -1){
+                dbAccess.updateTransaction(txnId, (int)spinner.getSelectedItemId(), Double.parseDouble(editTextAmt.getText().toString()),
+                        editTextNote.getText().toString());
+                Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }catch (Exception e){
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void btnDeleteTxnClick(View view) {
+        try{
+            if(txnId != -1){
+                AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+                builder1.setMessage("Do you really want to delete?");
+                builder1.setCancelable(true);
+                builder1.setPositiveButton("Yes",(dialog, id) -> {
+                    dbAccess.deleteTransaction((int)txnId);
+                    Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show();
+                    finish();
+                });
+                builder1.setNegativeButton("No", (dialog, id) -> dialog.cancel());
+
+                AlertDialog alert11 = builder1.create();
+                alert11.show();
+            }
+
+        }catch (Exception e){
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 }

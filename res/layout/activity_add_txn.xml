@@ -18,17 +18,26 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/text_view_sender"/>
+            android:id="@+id/text_view_sender"
+            android:visibility="gone"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/text_view_msg"/>
-
-        <Spinner
+            android:id="@+id/text_view_msg"
+            android:visibility="gone"/>
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:id="@+id/spinner_acc_view" />
+            android:layout_marginTop="16dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Select Account"/>
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner_acc_view" />
+        </LinearLayout>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -38,12 +47,14 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Comment"
-            android:id="@+id/edit_text_comment_input"/>
+            android:maxLength="30"
+            android:hint="Note"
+            android:id="@+id/edit_text_note_input"/>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Insert"
+            android:layout_gravity="end"
             android:onClick="btnInsertTxnClick"/>
     </LinearLayout>
 

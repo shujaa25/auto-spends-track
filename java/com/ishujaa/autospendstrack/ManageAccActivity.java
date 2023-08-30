@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 public class ManageAccActivity extends AppCompatActivity {
 
-    private DBHelper dbHelper;
+    private DBAccess dbAccess;
     private ListView listViewAccounts;
 
     @Override
@@ -29,14 +29,14 @@ public class ManageAccActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        dbHelper = new DBHelper(this);
+        dbAccess = new DBAccess(this);
         listViewAccounts = findViewById(R.id.list_view_acc);
         updateListView();
         listViewAccounts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(view.getContext(), AccountViewActivity.class);
-                intent.putExtra(AccountViewActivity.ACC_ID_EXTRA, id);
+                intent.putExtra(AccountViewActivity.ACC_ID_EXTRA, (int)id);
                 startActivity(intent);
             }
         });
@@ -51,7 +51,7 @@ public class ManageAccActivity extends AppCompatActivity {
     private void updateListView(){
 
         try{
-            SimpleCursorAdapter cursorAdapter = dbHelper.getAccountsAdapter();
+            SimpleCursorAdapter cursorAdapter = dbAccess.getAccountsAdapter();
             listViewAccounts.setAdapter(cursorAdapter);
         }catch (Exception e){
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
@@ -68,12 +68,10 @@ public class ManageAccActivity extends AppCompatActivity {
             Toast.makeText(this, "Invalid Account Name.", Toast.LENGTH_SHORT).show();
         else{
             try{
-                SQLiteDatabase database = dbHelper.getWritableDatabase();
-                dbHelper.insertRecord(database, newAccName);
-                database.close();
-                updateListView();
+                dbAccess.insertNewAcc(editTextNewAccName.getText().toString());
                 Toast.makeText(this, "Successfully Inserted.", Toast.LENGTH_SHORT).show();
                 editTextNewAccName.setText("");
+                updateListView();
             }catch (Exception e){
                 Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
             }

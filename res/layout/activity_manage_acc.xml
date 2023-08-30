@@ -44,6 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/edit_text_new_acc_name"
+            android:maxLength="15"
             android:hint="New Account Name"/>
         <Button
             android:layout_width="match_parent"

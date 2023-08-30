@@ -22,18 +22,9 @@ public class DBHelper extends SQLiteOpenHelper {
         this.context = context;
     }
 
-    public void insertRecord(SQLiteDatabase db, String name){
-        ContentValues targetValues = new ContentValues();
-        targetValues.put("name", name);
-        db.insert(TABLE_ACCOUNTS, null, targetValues);
-    }
-
-    public void insertTxn(SQLiteDatabase db, String amount, long acc_id, String cmt){
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("amount", amount);
-        contentValues.put("acc_id", acc_id);
-        contentValues.put("comment", cmt);
-        db.insert(TABLE_TXNS, null, contentValues);
+    @Override
+    public void onConfigure(SQLiteDatabase db) {
+        db.setForeignKeyConstraintsEnabled(true);
     }
 
     @Override
@@ -42,42 +33,19 @@ public class DBHelper extends SQLiteOpenHelper {
                 "(_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "name TEXT UNIQUE NOT NULL);");
 
+        db.execSQL("INSERT INTO table_accounts VALUES (1, 'Default');");
         db.execSQL("CREATE TABLE table_txns " +
                 "(_id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "amount TEXT NOT NULL," +
-                "acc_id INTEGER NOT NULL," +
-                "comment TEXT DEFAULT 'none'," +
-                "date DATETIME DEFAULT (datetime('now', 'localtime')) NOT NULL," +
-                "FOREIGN KEY(acc_id) REFERENCES table_accounts(_id));");
-
-        insertRecord(db, "Default");
-        insertTxn(db, "123123", 1, "test");
+                "acc_id INTEGER NOT NULL DEFAULT 1 REFERENCES table_accounts(_id) ON DELETE SET DEFAULT," +
+                "note TEXT DEFAULT 'none'," +
+                "date DATETIME DEFAULT (datetime('now', 'localtime')) NOT NULL" +
+                ");");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
-
-    public SimpleCursorAdapter getTxnsAdapter(){
-        SQLiteDatabase database = getReadableDatabase();
-        Cursor cursor = database.query(DBHelper.TABLE_TXNS, new String[]{"_id", "comment"},
-                null, null, null, null, "_id");
-        SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(context,
-                android.R.layout.simple_list_item_1, cursor,
-                new String[]{"comment"}, new int[]{android.R.id.text1}, 0);
-        return cursorAdapter;
-    }
-
-    public SimpleCursorAdapter getAccountsAdapter(){
-        SQLiteDatabase database = getReadableDatabase();
-        Cursor cursor = database.query(DBHelper.TABLE_ACCOUNTS, new String[]{"_id", "name"},
-                null, null, null, null, "_id");
-        SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(context,
-                android.R.layout.simple_list_item_1, cursor,
-                new String[]{"name"}, new int[]{android.R.id.text1}, 0);
-        return cursorAdapter;
-    }
-
 
 }
