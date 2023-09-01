@@ -74,8 +74,6 @@ public class MainActivity extends AppCompatActivity {
         }*/
 
         setRecView();
-
-        startActivity(new Intent(this, ExportCSV.class));
     }
 
     private void setRecView(){
