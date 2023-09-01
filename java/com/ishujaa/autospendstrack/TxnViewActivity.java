@@ -83,7 +83,7 @@ public class TxnViewActivity extends AppCompatActivity {
             if(txnId != -1){
                 dbAccess.updateTransaction(txnId, (int)spinner.getSelectedItemId(), Double.parseDouble(editTextAmt.getText().toString()),
                         editTextNote.getText().toString());
-                Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Updated", Toast.LENGTH_SHORT).show();
                 finish();
             }
         }catch (Exception e){

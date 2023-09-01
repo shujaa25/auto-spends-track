@@ -155,7 +155,7 @@ public class DBAccess {
         else if(acc && amt && date)
             sql = "SELECT _id, acc_id, amount, note, date FROM table_txns " +
                     "WHERE acc_id = "+acc_id+" AND date BETWEEN '"+date1+"' AND '"+date2+
-                    " AND amount BETWEEN "+amtLow+" AND "+amtHigh+";";
+                    "' AND amount BETWEEN "+amtLow+" AND "+amtHigh+";";
         else if (!acc && amt && !date)
             sql ="SELECT _id, acc_id, amount, note, date FROM table_txns " +
                     "WHERE amount BETWEEN "+amtLow+" AND "+amtHigh+";";

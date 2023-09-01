@@ -116,7 +116,7 @@ public class ExportCSV extends AppCompatActivity {
 
             transactions = dbAccess.getTransactions(isAccountEnabled, isAmountEnabled, isDatesEnabled,
                     currentAccId, amtLow, amtHigh, dateLow,dateHigh);
-            if (transactions.size() >= 1) {
+            if (transactions != null && transactions.size() >= 1) {
                 buttonExport.setEnabled(true);
                 TransactionsAdapter transactionsAdapter = new TransactionsAdapter(transactions);
                 RecyclerView recyclerView = findViewById(R.id.rec_view_txns2);
@@ -145,13 +145,18 @@ public class ExportCSV extends AppCompatActivity {
                     buttonExport.setEnabled(false);
                 }
             }
-
-
         } catch (Exception e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setRecView();
+    }
+
     public void btnFetchTxnClick(View view) {
         setRecView();
     }
