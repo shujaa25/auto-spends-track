@@ -45,10 +45,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("INSERT INTO table_txns VALUES(8, 130,1,'testdata5','2023-08-15 10:12:05')");
-        db.execSQL("INSERT INTO table_txns VALUES(9, 2000,1,'testdata2','2023-08-10 10:12:05')");
-        db.execSQL("INSERT INTO table_txns VALUES(10, 1500,1,'testdata3','2023-08-29 10:12:05')");
-        db.execSQL("INSERT INTO table_txns VALUES(11, 10,1,'testdata4','2023-08-30 10:12:05')");
     }
 
 }
