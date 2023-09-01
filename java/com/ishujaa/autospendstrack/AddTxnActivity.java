@@ -38,7 +38,7 @@ public class AddTxnActivity extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         editTextAmount = findViewById(R.id.edit_text_amount_input);
-
+        editTextNote = findViewById(R.id.edit_text_note_input);
         Intent intent = getIntent();
         boolean isExplicit = intent.getBooleanExtra(EXPLICIT_EXTRA, false);
         if(!isExplicit){
@@ -51,15 +51,16 @@ public class AddTxnActivity extends AppCompatActivity {
             textViewMsg.setVisibility(View.VISIBLE);
             textViewMsg.setText("Message: "+msg);
             processMsg(msg);
-        }
+            editTextNote.requestFocus();
+        }else editTextAmount.requestFocus();
 
         dbAccess = new DBAccess(this);
         spinner = findViewById(R.id.spinner_acc_view);
         SimpleCursorAdapter cursorAdapter = dbAccess.getAccountsAdapter();
         spinner.setAdapter(cursorAdapter);
 
-        editTextNote = findViewById(R.id.edit_text_note_input);
-        editTextNote.requestFocus();
+
+
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
     }
 

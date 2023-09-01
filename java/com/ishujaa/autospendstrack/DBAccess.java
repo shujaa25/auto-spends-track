@@ -106,6 +106,90 @@ public class DBAccess {
         return transaction;
     }
 
+    public double[] getMinMaxAmount(){
+        double[] res = new double[2];
+        SQLiteDatabase database = sqLiteOpenHelper.getReadableDatabase();
+        Cursor cursor = database.query(DBHelper.TABLE_TXNS,
+                new String[]{"MIN(amount), MAX(amount)"}, null,
+                null, null, null, null);
+        cursor.moveToFirst();
+        if(cursor.getCount() != 0){
+            res[0] = cursor.getDouble(0);
+            res[1] = cursor.getDouble(1);
+        }
+
+        cursor.close();
+        database.close();
+        return res;
+    }
+
+    public String[] getMinMaxDates(){
+        String[] res = new String[2];
+        SQLiteDatabase database = sqLiteOpenHelper.getReadableDatabase();
+        Cursor cursor = database.query(DBHelper.TABLE_TXNS,
+                new String[]{"MIN(date), MAX(date)"}, null,
+                null, null, null, null);
+        cursor.moveToFirst();
+        if(cursor.getCount() != 0){
+            res[0] = cursor.getString(0);
+            res[1] = cursor.getString(1);
+        }
+
+        cursor.close();
+        database.close();
+        return res;
+    }
+
+    public ArrayList<Transaction>getTransactions(boolean acc, boolean amt, boolean date,
+            int acc_id, double amtLow, double amtHigh, String date1, String date2) throws Exception{
+        String sql = "";
+        if(acc && !amt && !date)
+            sql ="SELECT _id, acc_id, amount, note, date FROM table_txns " +
+                    "WHERE acc_id = "+acc_id;
+        else if(acc && amt && !date)
+            sql = "SELECT _id, acc_id, amount, note, date FROM table_txns " +
+                    "WHERE acc_id = "+acc_id+" AND amount BETWEEN "+amtLow+" AND "+amtHigh+";";
+        else if(acc && !amt && date)
+            sql = "SELECT _id, acc_id, amount, note, date FROM table_txns " +
+                    "WHERE acc_id = "+acc_id+" AND date BETWEEN '"+date1+"' AND '"+date2+"';";
+        else if(acc && amt && date)
+            sql = "SELECT _id, acc_id, amount, note, date FROM table_txns " +
+                    "WHERE acc_id = "+acc_id+" AND date BETWEEN '"+date1+"' AND '"+date2+
+                    " AND amount BETWEEN "+amtLow+" AND "+amtHigh+";";
+        else if (!acc && amt && !date)
+            sql ="SELECT _id, acc_id, amount, note, date FROM table_txns " +
+                    "WHERE amount BETWEEN "+amtLow+" AND "+amtHigh+";";
+        else if (!acc && !amt && date)
+            sql ="SELECT _id, acc_id, amount, note, date FROM table_txns " +
+                    "WHERE date BETWEEN '"+date1+"' AND '"+date2+"';";
+        else if (!acc && amt && date)
+            sql = "SELECT _id, acc_id, amount, note, date FROM table_txns " +
+                    "WHERE date BETWEEN '"+date1+"' AND '"+date2+
+                    "' AND amount BETWEEN "+amtLow+" AND "+amtHigh+";";
+        else
+            sql = "SELECT _id, acc_id, amount, note, date FROM table_txns;";
+        SQLiteDatabase database = sqLiteOpenHelper.getReadableDatabase();
+        Cursor cursor = database.rawQuery(sql, null);
+
+        ArrayList<Transaction> arrayList = new ArrayList<>();
+        cursor.moveToFirst();
+        if(cursor.getCount() == 0) return arrayList;
+        do{
+            Transaction transaction = new Transaction();
+            transaction.setTxnId(Integer.parseInt(cursor.getString(0)));
+            transaction.setAccountId(Integer.parseInt(cursor.getString(1)));
+            transaction.setAmount(Double.parseDouble(cursor.getString(2)));
+            transaction.setNote(cursor.getString(3));
+            transaction.setDate(cursor.getString(4));
+            arrayList.add(transaction);
+
+        }while (cursor.moveToNext());
+
+        cursor.close();
+        database.close();;
+        return arrayList;
+    }
+
     public ArrayList<Transaction> getTransactions() throws Exception{
         SQLiteDatabase database = sqLiteOpenHelper.getReadableDatabase();
         Cursor cursor = database.query(DBHelper.TABLE_TXNS, new String[]{"_id", "acc_id",

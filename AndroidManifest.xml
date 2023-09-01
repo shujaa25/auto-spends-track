@@ -20,29 +20,35 @@
         android:theme="@style/Theme.AutoSpendsTrack"
         tools:targetApi="31">
         <activity
-            android:name=".TxnViewActivity"
-            android:label="Transaction Details"
+            android:name=".ExportCSV"
             android:exported="false"
             android:parentActivityName=".MainActivity"
+            android:label="Export to CSV"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".TxnViewActivity"
+            android:exported="false"
+            android:label="Transaction Details"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".AccountViewActivity"
-            android:label="Account Details"
             android:exported="false"
+            android:label="Account Details"
             android:parentActivityName=".ManageAccActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ManageAccActivity"
-            android:label="Manage Accounts"
             android:exported="false"
+            android:label="Manage Accounts"
             android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".AddTxnActivity"
-            android:label="Add Transaction"
             android:exported="false"
+            android:label="Add Transaction"
             android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <receiver
             android:name=".MySMSReceiver"

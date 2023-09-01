@@ -45,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
         }else if(id == R.id.action_manage_acc){
             startActivity(new Intent(this, ManageAccActivity.class));
             return true;
+        }else if(id == R.id.action_export_csv){
+            startActivity(new Intent(this, ExportCSV.class));
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -71,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
         }*/
 
         setRecView();
+
+        startActivity(new Intent(this, ExportCSV.class));
     }
 
     private void setRecView(){
