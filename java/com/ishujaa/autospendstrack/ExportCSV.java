@@ -118,6 +118,25 @@ public class ExportCSV extends AppCompatActivity {
                     currentAccId, amtLow, amtHigh, dateLow,dateHigh);
             if (transactions.size() >= 1) {
                 buttonExport.setEnabled(true);
+                TransactionsAdapter transactionsAdapter = new TransactionsAdapter(transactions);
+                RecyclerView recyclerView = findViewById(R.id.rec_view_txns2);
+                recyclerView.setAdapter(transactionsAdapter);
+                recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
+                ArrayList<Transaction> finalTransactions = transactions;
+                transactionsAdapter.setListener(new TransactionsAdapter.Listener() {
+                    @Override
+                    public void onClick(int pos) {
+                        try {
+                            Intent intent = new Intent(getApplicationContext(), TxnViewActivity.class);
+                            intent.putExtra(TxnViewActivity.TXN_ID_EXTRA, finalTransactions.get(pos).getTxnId());
+                            startActivity(intent);
+                        } catch (Exception e) {
+                            Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
             } else{
                 transactions = null;
                 Toast.makeText(this, "No transaction found for selected criteria.",
@@ -127,25 +146,7 @@ public class ExportCSV extends AppCompatActivity {
                 }
             }
 
-            TransactionsAdapter transactionsAdapter = new TransactionsAdapter(transactions);
-            RecyclerView recyclerView = findViewById(R.id.rec_view_txns2);
-            recyclerView.setAdapter(transactionsAdapter);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
-            ArrayList<Transaction> finalTransactions = transactions;
-            transactionsAdapter.setListener(new TransactionsAdapter.Listener() {
-                @Override
-                public void onClick(int pos) {
-                    try {
-                        Intent intent = new Intent(getApplicationContext(), TxnViewActivity.class);
-                        intent.putExtra(TxnViewActivity.TXN_ID_EXTRA, finalTransactions.get(pos).getTxnId());
-                        startActivity(intent);
-                    } catch (Exception e) {
-                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                }
-            });
         } catch (Exception e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
