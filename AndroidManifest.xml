@@ -32,7 +32,7 @@
             android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AccountViewActivity"
+            android:name=".AccViewActivity"
             android:exported="false"
             android:label="Account Details"
             android:parentActivityName=".ManageAccActivity"

@@ -5,16 +5,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class AccountViewActivity extends AppCompatActivity {
+public class AccViewActivity extends AppCompatActivity {
 
     static String ACC_ID_EXTRA = "acc_id";
     private DBAccess dbAccess;
@@ -25,7 +22,7 @@ public class AccountViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_account_view);
+        setContentView(R.layout.activity_acc_view);
 
         Toolbar toolbar = findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
