@@ -141,33 +141,35 @@ public class DBAccess {
     }
 
     public ArrayList<Transaction>getTransactions(boolean acc, boolean amt, boolean date,
-            int acc_id, double amtLow, double amtHigh, String date1, String date2) throws Exception{
+            int acc_id, double amtLow, double amtHigh, String date1, String date2,
+                                                 String orderBy) throws Exception{
         String sql = "";
         if(acc && !amt && !date)
             sql ="SELECT _id, acc_id, amount, note, date FROM table_txns " +
                     "WHERE acc_id = "+acc_id;
         else if(acc && amt && !date)
             sql = "SELECT _id, acc_id, amount, note, date FROM table_txns " +
-                    "WHERE acc_id = "+acc_id+" AND amount BETWEEN "+amtLow+" AND "+amtHigh+";";
+                    "WHERE acc_id = "+acc_id+" AND amount BETWEEN "+amtLow+" AND "+amtHigh;
         else if(acc && !amt && date)
             sql = "SELECT _id, acc_id, amount, note, date FROM table_txns " +
-                    "WHERE acc_id = "+acc_id+" AND date BETWEEN '"+date1+"' AND '"+date2+"';";
+                    "WHERE acc_id = "+acc_id+" AND date BETWEEN '"+date1+"' AND '"+date2+"'";
         else if(acc && amt && date)
             sql = "SELECT _id, acc_id, amount, note, date FROM table_txns " +
                     "WHERE acc_id = "+acc_id+" AND date BETWEEN '"+date1+"' AND '"+date2+
-                    "' AND amount BETWEEN "+amtLow+" AND "+amtHigh+";";
+                    "' AND amount BETWEEN "+amtLow+" AND "+amtHigh;
         else if (!acc && amt && !date)
             sql ="SELECT _id, acc_id, amount, note, date FROM table_txns " +
-                    "WHERE amount BETWEEN "+amtLow+" AND "+amtHigh+";";
+                    "WHERE amount BETWEEN "+amtLow+" AND "+amtHigh;
         else if (!acc && !amt && date)
             sql ="SELECT _id, acc_id, amount, note, date FROM table_txns " +
-                    "WHERE date BETWEEN '"+date1+"' AND '"+date2+"';";
+                    "WHERE date BETWEEN '"+date1+"' AND '"+date2+"'";
         else if (!acc && amt && date)
             sql = "SELECT _id, acc_id, amount, note, date FROM table_txns " +
                     "WHERE date BETWEEN '"+date1+"' AND '"+date2+
-                    "' AND amount BETWEEN "+amtLow+" AND "+amtHigh+";";
+                    "' AND amount BETWEEN "+amtLow+" AND "+amtHigh;
         else
-            sql = "SELECT _id, acc_id, amount, note, date FROM table_txns;";
+            sql = "SELECT _id, acc_id, amount, note, date FROM table_txns";
+        sql+=" ORDER BY "+orderBy+";";
         SQLiteDatabase database = sqLiteOpenHelper.getReadableDatabase();
         Cursor cursor = database.rawQuery(sql, null);
 
@@ -194,7 +196,7 @@ public class DBAccess {
         SQLiteDatabase database = sqLiteOpenHelper.getReadableDatabase();
         Cursor cursor = database.query(DBHelper.TABLE_TXNS, new String[]{"_id", "acc_id",
                         "amount", "note", "date"},
-                null, null, null, null, "_id");
+                null, null, null, null, "date DESC");
 
         ArrayList<Transaction> arrayList = new ArrayList<>();
         cursor.moveToFirst();

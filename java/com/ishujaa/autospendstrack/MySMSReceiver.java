@@ -38,37 +38,17 @@ public class MySMSReceiver extends BroadcastReceiver {
                 //strMessage += "SMS from " + msgs[i].getOriginatingAddress();
                 //strMessage += " :" + msgs[i].getMessageBody() + "\n";
 
-                //what if there is no space before or after
+                //what if there is no space before or after?
                 if (!msgs[i].getMessageBody().toLowerCase(Locale.ROOT).contains(" debited ") &&
                         !msgs[i].getMessageBody().toLowerCase(Locale.ROOT).contains(" spent ") &&
                         !msgs[i].getMessageBody().toLowerCase(Locale.ROOT).contains(" sent ") &&
                         !msgs[i].getMessageBody().toLowerCase(Locale.ROOT).contains(" paid ") &&
-                        !msgs[i].getMessageBody().toLowerCase(Locale.ROOT).contains(" txn "))
+                        !msgs[i].getMessageBody().toLowerCase(Locale.ROOT).contains(" txn ") &&
+                        !msgs[i].getMessageBody().toLowerCase(Locale.ROOT).contains(" transfer "))
                     continue;
 
                 notification.postNotification(msgs[i].getOriginatingAddress(),
                         msgs[i].getMessageBody());
-
-                String time = "null";
-                LocalDateTime now = null;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-                    now = LocalDateTime.now();
-                    time = dtf.format(now);
-                }
-
-
-                //openHelper = new DBHelper(context);
-                //SQLiteDatabase database = openHelper.getWritableDatabase();
-                //ContentValues targetValues = new ContentValues();
-                //targetValues.put("sender", msgs[i].getOriginatingAddress());
-                //targetValues.put("message", msgs[i].getMessageBody());
-                //targetValues.put("date", time);
-                //database.insert("saved", null, targetValues);
-
-                //database.close();
-                //openHelper.close();
-
             }
         }
     }

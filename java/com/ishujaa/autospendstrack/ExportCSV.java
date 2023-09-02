@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class ExportCSV extends AppCompatActivity {
 
     private DBAccess dbAccess;
-    private Spinner spinner;
+    private Spinner spinnerAccount, spinnerOrderBy;
     private CheckBox checkBoxAccount, checkBoxAmount, checkBoxDates;
     private EditText editTextAmountMin, editTextAmountMax, editTextDateLow, editTextDateHigh;
     private ArrayList<Transaction> transactions;
@@ -38,12 +38,12 @@ public class ExportCSV extends AppCompatActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         dbAccess = new DBAccess(this);
-        spinner = findViewById(R.id.spinner_acc_name_view2);
+        spinnerAccount = findViewById(R.id.spinner_acc_name_view2);
         SimpleCursorAdapter cursorAdapter = dbAccess.getAccountsAdapter();
-        spinner.setAdapter(cursorAdapter);
-        spinner.setEnabled(false);
+        spinnerAccount.setAdapter(cursorAdapter);
+        spinnerAccount.setEnabled(false);
 
-
+        spinnerOrderBy = findViewById(R.id.spinner_order_by);
 
         checkBoxAccount = findViewById(R.id.check_box_account);
         checkBoxAmount = findViewById(R.id.check_box_amount);
@@ -53,8 +53,8 @@ public class ExportCSV extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(compoundButton.isChecked()){
-                    spinner.setEnabled(true);
-                }else spinner.setEnabled(false);
+                    spinnerAccount.setEnabled(true);
+                }else spinnerAccount.setEnabled(false);
             }
         });
 
@@ -106,7 +106,7 @@ public class ExportCSV extends AppCompatActivity {
             boolean isAmountEnabled = checkBoxAmount.isChecked();
             boolean isDatesEnabled = checkBoxDates.isChecked();
 
-            int currentAccId = (int) spinner.getSelectedItemId();
+            int currentAccId = (int) spinnerAccount.getSelectedItemId();
 
             double amtLow = Double.parseDouble(editTextAmountMin.getText().toString());
             double amtHigh = Double.parseDouble(editTextAmountMax.getText().toString());
@@ -115,7 +115,7 @@ public class ExportCSV extends AppCompatActivity {
             String dateHigh = editTextDateHigh.getText().toString();
 
             transactions = dbAccess.getTransactions(isAccountEnabled, isAmountEnabled, isDatesEnabled,
-                    currentAccId, amtLow, amtHigh, dateLow,dateHigh);
+                    currentAccId, amtLow, amtHigh, dateLow,dateHigh, spinnerOrderBy.getSelectedItem().toString());
             if (transactions != null && transactions.size() >= 1) {
                 buttonExport.setEnabled(true);
                 TransactionsAdapter transactionsAdapter = new TransactionsAdapter(transactions);
@@ -165,7 +165,7 @@ public class ExportCSV extends AppCompatActivity {
         if(transactions!= null){
             try{
                 new WriteToCSVHelper(this, transactions);
-                Toast.makeText(this, "Saved to Documents/AutoSpendsTracker/export.csv",
+                Toast.makeText(this, "Saved to Documents/AutoSpendsTracker folder.",
                         Toast.LENGTH_LONG).show();
             }catch (Exception e){
                 Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();

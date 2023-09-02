@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -35,8 +34,8 @@ public class ManageAccActivity extends AppCompatActivity {
         listViewAccounts.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(view.getContext(), AccountViewActivity.class);
-                intent.putExtra(AccountViewActivity.ACC_ID_EXTRA, (int)id);
+                Intent intent = new Intent(view.getContext(), AccViewActivity.class);
+                intent.putExtra(AccViewActivity.ACC_ID_EXTRA, (int)id);
                 startActivity(intent);
             }
         });

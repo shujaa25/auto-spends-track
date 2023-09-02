@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Auto Spends Track</string>
+    <string-array name="entriesSpinnerOrderBy">
+        <item>Date ASC</item>
+        <item>Date DESC</item>
+        <item>Amount ASC</item>
+        <item>Amount DESC</item>
+    </string-array>
 </resources>
