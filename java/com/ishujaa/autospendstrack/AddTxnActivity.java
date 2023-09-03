@@ -77,7 +77,9 @@ public class AddTxnActivity extends AppCompatActivity {
 
             i++;
             while(i < len && msg.charAt(i) != ' ') //may not end with space or end with , or .
-                amountVal.append(msg.charAt(i++));
+                if(msg.charAt(i)!=','){
+                    amountVal.append(msg.charAt(i++));
+                }else i++;
 
             editTextAmount.setText(amountVal.toString());
         }

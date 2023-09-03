@@ -44,7 +44,7 @@ public class MySMSReceiver extends BroadcastReceiver {
                         !msgs[i].getMessageBody().toLowerCase(Locale.ROOT).contains(" sent ") &&
                         !msgs[i].getMessageBody().toLowerCase(Locale.ROOT).contains(" paid ") &&
                         !msgs[i].getMessageBody().toLowerCase(Locale.ROOT).contains(" txn ") &&
-                        !msgs[i].getMessageBody().toLowerCase(Locale.ROOT).contains(" transfer "))
+                        !msgs[i].getMessageBody().toLowerCase(Locale.ROOT).contains(" transfer"))
                     continue;
 
                 notification.postNotification(msgs[i].getOriginatingAddress(),
