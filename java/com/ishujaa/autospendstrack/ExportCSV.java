@@ -137,6 +137,12 @@ public class ExportCSV extends AppCompatActivity {
                         }
                     }
                 });
+
+                double sum = 0;
+                for(int i=0;i<finalTransactions.size();i++){
+                    sum+=finalTransactions.get(i).getAmount();
+                }
+                Toast.makeText(this, "Sum: "+sum, Toast.LENGTH_SHORT).show();
             } else{
                 transactions = null;
                 Toast.makeText(this, "No transaction found for selected criteria.",

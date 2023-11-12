@@ -27,7 +27,7 @@ public class WriteToCSVHelper {
             line.append(ctr++);line.append(",");
             line.append(dbAccess.getAccountName(transaction.getAccountId()));line.append(",");
             line.append(transaction.getAmount());line.append(",");
-            line.append(transaction.getNote());line.append(",");
+            line.append(transaction.getNote().replaceAll(","," "));line.append(",");
             line.append(transaction.getDate());line.append("\n");
             res.append(line);
         }
