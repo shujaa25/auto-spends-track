@@ -1,4 +1,4 @@
-package com.ishujaa.autospendstracker;
+package com.ishujaa.autospendstracker.activities;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
@@ -10,6 +10,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.ishujaa.autospendstracker.DBAccess;
+import com.ishujaa.autospendstracker.R;
 
 public class AccViewActivity extends AppCompatActivity {
 

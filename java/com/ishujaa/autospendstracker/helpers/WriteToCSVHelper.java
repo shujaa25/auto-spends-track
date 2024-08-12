@@ -1,4 +1,4 @@
-package com.ishujaa.autospendstracker;
+package com.ishujaa.autospendstracker.helpers;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,6 +6,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
+
+import com.ishujaa.autospendstracker.DBAccess;
+import com.ishujaa.autospendstracker.pojo.Transaction;
 
 import java.io.File;
 import java.io.FileOutputStream;

@@ -1,18 +1,17 @@
-package com.ishujaa.autospendstracker;
+package com.ishujaa.autospendstracker.activities;
 
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-public class BackupRestore extends AppCompatActivity {
+import com.ishujaa.autospendstracker.R;
+import com.ishujaa.autospendstracker.helpers.RestoreHelper;
+
+public class BackupRestoreActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

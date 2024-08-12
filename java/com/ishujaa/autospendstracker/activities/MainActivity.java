@@ -1,4 +1,4 @@
-package com.ishujaa.autospendstracker;
+package com.ishujaa.autospendstracker.activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -16,6 +16,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.ishujaa.autospendstracker.DBAccess;
+import com.ishujaa.autospendstracker.R;
+import com.ishujaa.autospendstracker.adapters.TransactionsAdapter;
+import com.ishujaa.autospendstracker.pojo.Transaction;
 
 import java.util.ArrayList;
 
@@ -42,10 +47,10 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(this, ManageAccActivity.class));
             return true;
         }else if(id == R.id.action_export_csv){
-            startActivity(new Intent(this, ExportCSV.class));
+            startActivity(new Intent(this, ExportCSVActivity.class));
             return true;
         }else if (id == R.id.action_backup_restore){
-            startActivity(new Intent(this, BackupRestore.class));
+            startActivity(new Intent(this, BackupRestoreActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);

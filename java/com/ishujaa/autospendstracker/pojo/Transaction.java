@@ -1,4 +1,4 @@
-package com.ishujaa.autospendstracker;
+package com.ishujaa.autospendstracker.pojo;
 
 
 public class Transaction {

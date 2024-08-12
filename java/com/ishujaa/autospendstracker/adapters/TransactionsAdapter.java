@@ -1,4 +1,4 @@
-package com.ishujaa.autospendstracker;
+package com.ishujaa.autospendstracker.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +9,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.ishujaa.autospendstracker.DBAccess;
+import com.ishujaa.autospendstracker.R;
+import com.ishujaa.autospendstracker.pojo.Transaction;
 
 import java.util.ArrayList;
 

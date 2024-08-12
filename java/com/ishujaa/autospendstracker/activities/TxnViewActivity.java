@@ -1,4 +1,4 @@
-package com.ishujaa.autospendstracker;
+package com.ishujaa.autospendstracker.activities;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
@@ -12,6 +12,10 @@ import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.ishujaa.autospendstracker.DBAccess;
+import com.ishujaa.autospendstracker.R;
+import com.ishujaa.autospendstracker.pojo.Transaction;
 
 public class TxnViewActivity extends AppCompatActivity {
 

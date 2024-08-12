@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.SimpleCursorAdapter;
 
+import com.ishujaa.autospendstracker.helpers.DBHelper;
+import com.ishujaa.autospendstracker.pojo.Transaction;
+
 import java.util.ArrayList;
 
 public class DBAccess {

@@ -1,4 +1,4 @@
-package com.ishujaa.autospendstracker;
+package com.ishujaa.autospendstracker.helpers;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

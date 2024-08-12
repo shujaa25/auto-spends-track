@@ -1,4 +1,4 @@
-package com.ishujaa.autospendstracker;
+package com.ishujaa.autospendstracker.receivers;
 
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
+
+import com.ishujaa.autospendstracker.helpers.MyNotificationHelper;
 
 import java.util.Locale;
 

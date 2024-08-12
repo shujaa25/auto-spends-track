@@ -1,4 +1,4 @@
-package com.ishujaa.autospendstracker;
+package com.ishujaa.autospendstracker.activities;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,10 +20,16 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.ishujaa.autospendstracker.DBAccess;
+import com.ishujaa.autospendstracker.R;
+import com.ishujaa.autospendstracker.adapters.TransactionsAdapter;
+import com.ishujaa.autospendstracker.helpers.WriteToCSVHelper;
+import com.ishujaa.autospendstracker.pojo.Transaction;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class ExportCSV extends AppCompatActivity {
+public class ExportCSVActivity extends AppCompatActivity {
 
     private DBAccess dbAccess;
     private Spinner spinnerAccount, spinnerOrderBy;
@@ -131,7 +137,7 @@ public class ExportCSV extends AppCompatActivity {
         int day = c.get(Calendar.DAY_OF_MONTH);
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(
-                ExportCSV.this,
+                ExportCSVActivity.this,
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year,
