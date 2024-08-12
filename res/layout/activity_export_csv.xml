@@ -76,12 +76,22 @@
                 android:layout_weight="1"
                 android:enabled="false"
                 android:id="@+id/edit_text_date_low"/>
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnSelectDateLow"
+                android:src="@drawable/ic_calendar_pick"/>
             <EditText
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:enabled="false"
                 android:id="@+id/edit_text_date_high"/>
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnSelectDateHigh"
+                android:src="@drawable/ic_calendar_pick"/>
         </LinearLayout>
         <TextView
             android:layout_width="wrap_content"

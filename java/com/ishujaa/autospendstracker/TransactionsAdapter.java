@@ -1,6 +1,5 @@
-package com.ishujaa.autospendstrack;
+package com.ishujaa.autospendstracker;
 
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +8,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.motion.widget.ViewTransition;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;

@@ -19,5 +19,10 @@
         android:title="Export to CSV"
         android:orderInCategory="3"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_backup_restore"
+        android:title="Backup/Restore"
+        android:orderInCategory="4"
+        app:showAsAction="never"/>
 
 </menu>

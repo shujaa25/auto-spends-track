@@ -1,4 +1,4 @@
-package com.ishujaa.autospendstrack;
+package com.ishujaa.autospendstracker;
 
 
 public class Transaction {

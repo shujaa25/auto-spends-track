@@ -1,4 +1,4 @@
-package com.ishujaa.autospendstrack;
+package com.ishujaa.autospendstracker;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;

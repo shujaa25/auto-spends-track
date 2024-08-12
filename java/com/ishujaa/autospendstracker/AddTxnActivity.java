@@ -1,16 +1,13 @@
-package com.ishujaa.autospendstrack;
+package com.ishujaa.autospendstracker;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
@@ -50,8 +47,11 @@ public class AddTxnActivity extends AppCompatActivity {
             TextView textViewMsg = findViewById(R.id.text_view_msg);
             textViewMsg.setVisibility(View.VISIBLE);
             textViewMsg.setText("Message: "+msg);
-            processMsg(msg);
-            editTextNote.requestFocus();
+            String amountVal = fetchAmount(msg);
+            editTextAmount.setText(amountVal);
+            if(amountVal.isEmpty()){
+                editTextAmount.requestFocus();
+            }else editTextNote.requestFocus();
         }else editTextAmount.requestFocus();
 
         dbAccess = new DBAccess(this);
@@ -64,7 +64,7 @@ public class AddTxnActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
     }
 
-    private void processMsg(String msg){
+    /*private void processMsg(String msg){
         int len = msg.length();
         int i = msg.indexOf("Rs"); //case issue, beginning issue
         if(i == -1)
@@ -83,6 +83,34 @@ public class AddTxnActivity extends AppCompatActivity {
 
             editTextAmount.setText(amountVal.toString());
         }
+    }*/
+
+    private String fetchAmount(String m){
+        m = m.toLowerCase();
+        int i = m.indexOf("rs");
+        int len = m.length();
+
+        if(i == -1) i = 0;
+
+        boolean confidence = false;
+        StringBuilder amount = new StringBuilder();
+        while(i < len && !confidence){
+
+            while(i < len && !(m.charAt(i) >= '0' && m.charAt(i) <= '9')) i++;
+
+            StringBuilder val = new StringBuilder();
+            while(i < len && ((m.charAt(i) == '.') || (m.charAt(i) == ',') || (m.charAt(i) >= '0' && m.charAt(i) <= '9'))){
+                if(m.charAt(i) == ','){
+                    i++;
+                    continue;
+                }
+                if(m.charAt(i) == '.') confidence = true;
+                val.append(m.charAt(i++));
+            }
+            amount=val;
+        }
+
+        return amount.toString();
     }
 
     public void btnInsertTxnClick(View view){

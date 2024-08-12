@@ -1,4 +1,4 @@
-package com.ishujaa.autospendstrack;
+package com.ishujaa.autospendstracker;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -24,7 +24,7 @@ public class WriteToCSVHelper {
         int ctr=1;
         for(Transaction transaction: transactions){
             StringBuilder line = new StringBuilder();
-            line.append(ctr++);line.append(",");
+            line.append(ctr++);line.append(",");    
             line.append(dbAccess.getAccountName(transaction.getAccountId()));line.append(",");
             line.append(transaction.getAmount());line.append(",");
             line.append(transaction.getNote().replaceAll(","," "));line.append(",");

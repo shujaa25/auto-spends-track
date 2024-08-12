@@ -1,25 +1,16 @@
-package com.ishujaa.autospendstrack;
+package com.ishujaa.autospendstracker;
 
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Build;
 import android.os.Bundle;
 import android.telephony.SmsMessage;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public class MySMSReceiver extends BroadcastReceiver {
-
-    private static final String TAG = MySMSReceiver.class.getSimpleName();
     public static final String pdu_type = "pdus";
-    private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 1;
-
-    private SQLiteOpenHelper openHelper;
     private MyNotificationHelper notification;
     @SuppressLint("UnsafeProtectedBroadcastReceiver")
     @Override
@@ -44,7 +35,8 @@ public class MySMSReceiver extends BroadcastReceiver {
                         !msgs[i].getMessageBody().toLowerCase(Locale.ROOT).contains(" sent ") &&
                         !msgs[i].getMessageBody().toLowerCase(Locale.ROOT).contains(" paid ") &&
                         !msgs[i].getMessageBody().toLowerCase(Locale.ROOT).contains(" txn ") &&
-                        !msgs[i].getMessageBody().toLowerCase(Locale.ROOT).contains(" transfer"))
+                        !msgs[i].getMessageBody().toLowerCase(Locale.ROOT).contains(" transfer") &&
+                        !msgs[i].getMessageBody().toLowerCase(Locale.ROOT).contains("used"))
                     continue;
 
                 notification.postNotification(msgs[i].getOriginatingAddress(),

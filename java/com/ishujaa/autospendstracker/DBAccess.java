@@ -1,4 +1,4 @@
-package com.ishujaa.autospendstrack;
+package com.ishujaa.autospendstracker;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.SimpleCursorAdapter;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -28,11 +27,21 @@ public class DBAccess {
         database.insert(DBHelper.TABLE_TXNS, null, contentValues);
     }
 
-    public void insertNewAcc(String accountName){
+    public void insertNewTxn(double amount, int accId, String note, String date){
+        SQLiteDatabase database = sqLiteOpenHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("amount", amount);
+        contentValues.put("acc_id", accId);
+        contentValues.put("note", note);
+        contentValues.put("date", date);
+        database.insert(DBHelper.TABLE_TXNS, null, contentValues);
+    }
+
+    public long insertNewAcc(String accountName){
         SQLiteDatabase database = sqLiteOpenHelper.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("name", accountName);
-        database.insert(DBHelper.TABLE_ACCOUNTS, null, contentValues);
+        return database.insert(DBHelper.TABLE_ACCOUNTS, null, contentValues);
     }
 
     public String getAccountName(int id) throws Exception{

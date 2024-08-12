@@ -1,4 +1,4 @@
-package com.ishujaa.autospendstrack;
+package com.ishujaa.autospendstracker;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,18 +6,22 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class ExportCSV extends AppCompatActivity {
 
@@ -27,6 +31,7 @@ public class ExportCSV extends AppCompatActivity {
     private EditText editTextAmountMin, editTextAmountMax, editTextDateLow, editTextDateHigh;
     private ArrayList<Transaction> transactions;
     private Button buttonExport;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +41,8 @@ public class ExportCSV extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+        //CRASHING IF NO DATA
 
         dbAccess = new DBAccess(this);
         spinnerAccount = findViewById(R.id.spinner_acc_name_view2);
@@ -98,7 +105,52 @@ public class ExportCSV extends AppCompatActivity {
         editTextDateLow.setText(dates[0].substring(0, 10));
         editTextDateHigh.setText(dates[1].substring(0, 10));
 
+        ImageButton buttonSelectDateLow = findViewById(R.id.btnSelectDateLow);
+        ImageButton buttonSelectDateHigh = findViewById(R.id.btnSelectDateHigh);
+
+        buttonSelectDateLow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setDate(editTextDateLow);
+            }
+        });
+
+        buttonSelectDateHigh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setDate(editTextDateHigh);
+            }
+        });
+
     }
+
+    private void setDate(EditText editText){
+        final Calendar c = Calendar.getInstance();
+        int year = c.get(Calendar.YEAR);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                ExportCSV.this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+
+                        String monthString = "";
+                        int month = monthOfYear+1;
+                        if(month < 10){
+                            monthString = "0"+month;
+                        }else monthString+=month;
+
+                        String date = year+"-"+monthString+"-"+dayOfMonth;
+                        editText.setText(date);
+                    }
+                },
+                year, month, day);
+        datePickerDialog.show();
+    }
+
     private void setRecView() {
         transactions = null;
         try {

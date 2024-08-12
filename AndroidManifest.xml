@@ -20,11 +20,14 @@
         android:theme="@style/Theme.AutoSpendsTrack"
         tools:targetApi="31">
         <activity
+            android:name=".BackupRestore"
+            android:exported="false" />
+        <activity
             android:name=".ExportCSV"
             android:exported="false"
-            android:parentActivityName=".MainActivity"
             android:label="Export to CSV"
-            android:screenOrientation="portrait"/>
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".TxnViewActivity"
             android:exported="false"
