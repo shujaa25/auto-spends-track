@@ -242,7 +242,7 @@ public class DBAccess {
     public SimpleCursorAdapter getAccountsAdapter(){
         SQLiteDatabase database = sqLiteOpenHelper.getReadableDatabase();
         Cursor cursor = database.query(DBHelper.TABLE_ACCOUNTS, new String[]{"_id", "name"},
-                null, null, null, null, "_id");
+                null, null, null, null, "name");
         SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(context,
                 android.R.layout.simple_list_item_1, cursor,
                 new String[]{"name"}, new int[]{android.R.id.text1}, 0);
