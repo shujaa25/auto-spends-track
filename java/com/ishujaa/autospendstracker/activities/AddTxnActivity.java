@@ -19,9 +19,9 @@ import com.ishujaa.autospendstracker.R;
 
 public class AddTxnActivity extends AppCompatActivity {
 
-    static final String MSG_EXTRA = "MSGEXTRA_AST_AddTxn";
-    static final String SENDER_EXTRA = "SENDER_EXTRA";
-    static final String EXPLICIT_EXTRA = "EXPLICIT_EXTRA";
+    public static final String MSG_EXTRA = "MSGEXTRA_AST_AddTxn";
+    public static final String SENDER_EXTRA = "SENDER_EXTRA";
+    public static final String EXPLICIT_EXTRA = "EXPLICIT_EXTRA";
 
     private EditText editTextAmount, editTextNote;
     private DBAccess dbAccess;

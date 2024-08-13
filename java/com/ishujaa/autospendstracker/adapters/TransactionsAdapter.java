@@ -21,7 +21,7 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
     private ArrayList<Transaction> transactions;
     private Listener listener;
 
-    interface Listener{
+    public interface Listener{
         public void onClick(int pos);
     }
 

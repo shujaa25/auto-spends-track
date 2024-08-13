@@ -10,7 +10,7 @@ public class RestoreHelper {
 
     Context context;
 
-    RestoreHelper(Context context){
+    public RestoreHelper(Context context){
         this.context = context;
     }
 

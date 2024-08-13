@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ishujaa.autospendstracker.DBAccess;
@@ -200,7 +201,9 @@ public class ExportCSVActivity extends AppCompatActivity {
                 for(int i=0;i<finalTransactions.size();i++){
                     sum+=finalTransactions.get(i).getAmount();
                 }
-                Toast.makeText(this, "Sum: "+sum, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(this, "Sum: "+sum, Toast.LENGTH_SHORT).show();
+                ((TextView)findViewById(R.id.text_view_sum_display))
+                        .setText("Sum: "+Math.round(sum));
             } else{
                 transactions = null;
                 Toast.makeText(this, "No transaction found for selected criteria.",

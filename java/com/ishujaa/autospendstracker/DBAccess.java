@@ -16,7 +16,7 @@ public class DBAccess {
     private final Context context;
     private final SQLiteOpenHelper sqLiteOpenHelper;
 
-    DBAccess(Context context){
+    public DBAccess(Context context){
         this.context = context;
         sqLiteOpenHelper = new DBHelper(context);
     }

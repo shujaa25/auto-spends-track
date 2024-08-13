@@ -1,5 +1,6 @@
 package com.ishujaa.autospendstracker.activities;
 
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;

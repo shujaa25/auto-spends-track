@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class WriteToCSVHelper {
     private DBAccess dbAccess;
     private Context context;
-    WriteToCSVHelper(Context context, ArrayList<Transaction> transactions) throws Exception{
+    public WriteToCSVHelper(Context context, ArrayList<Transaction> transactions) throws Exception{
         this.context = context;
         dbAccess = new DBAccess(context);
         StringBuilder res = new StringBuilder();

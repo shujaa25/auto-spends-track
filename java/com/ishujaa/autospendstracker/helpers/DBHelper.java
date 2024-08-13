@@ -11,8 +11,8 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "ast_db";
     private static final int DB_VERSION = 4;
 
-    static final String TABLE_ACCOUNTS = "table_accounts";
-    static final String TABLE_TXNS = "table_txns";
+    public static final String TABLE_ACCOUNTS = "table_accounts";
+    public static final String TABLE_TXNS = "table_txns";
     Context context;
     public DBHelper(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
